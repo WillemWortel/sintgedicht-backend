@@ -19,7 +19,7 @@ def api_gedicht():
     info = request.args.get("info", "")
 
     prompt = f"""
-        Schrijf een Sinterklaasgedicht in het Nederlands voor {name} in HTML-opmaak.
+        Schrijf een Sinterklaasgedicht in het Nederlands voor {naam} in HTML-opmaak.
 
         Vorm:
         Begin met een aanhef.
@@ -115,6 +115,7 @@ def api_gedicht():
 
 if __name__ == "__main__":
     app.run()
+
 
 
 
