@@ -19,27 +19,73 @@ def api_gedicht():
     info = request.args.get("info", "")
 
     prompt = f"""
-    Schrijf een volledig Nederlands Sinterklaasgedicht voor {naam} in HTML-opmaak.
+        Schrijf een Sinterklaasgedicht in het Nederlands voor {name} in HTML-opmaak.
 
-    Regels:
-    - 20 tot 28 regels, verdeeld in 4 tot 6 strofen.
-    - Elke strofe in een aparte <p>.
-    - De eerste regel begint altijd met:
-      <h2>Lieve {naam},</h2>
-    - Gebruik <br> om rijmregels te scheiden binnen de strofe.
-    - Rijm om de 2 regels.
-    - Humoristisch, warm en respectvol.
-    - Laat het gedicht gaan over: {onderwerp}
-    - Verwerk deze aanvullende informatie over dat onderwerp ook: {info}
-    - Spreek {naam} direct aan met jij en je.
-    - Geen uitleg buiten het gedicht.
+        Vorm:
+        - Begin met:
+          <h2>Lieve {name},</h2>
+        - Daarna volgt het gedicht in 4 tot 7 strofen.
+        - Elke strofe heeft 4 of 5 regels.
+        - Elke strofe staat in een eigen <p>…</p>-element.
+        - Binnen elke strofe worden de regels gescheiden door <br>.
+        - Gebruik de rijmschema's AABB, ABAB en AABBA door elkaar heen (varieer per strofe).
+        - Gebruik geen exact hetzelfde woord als rijmwoord in één strofe.
+        - Schrijf alleen een geldig HTML-fragment (dus geen <html>, <body>, <head>).
 
-    Structuur:
-    - Start met een <h2> aanspreekvorm.
-    - Eindig met een groet van de Sint of van Sint en zijn Pieten
-      in een <footer> element, zoals:
-      “Hartelijke groetjes van de Sint en zijn Pieten.” of
-      “De alleraardigste groeten van Sint.” 🎁
+        Inhoud:
+        - Het gedicht gaat over: {onderwerp}.
+        - Verwerk deze extra informatie subtiel: {info}.
+        - Spreek {name} steeds aan met je en jij.
+        - De toon is warm, Sinterklaas-achtig en licht humoristisch.
+        - Geen sterretjes (*) of speciale markeringen rond rijmwoorden.
+
+        Voorbeelden van strofen (alleen om de vorm te tonen, NIET herhalen in output):
+
+        (AABB)
+        <p>
+        De zon verschijnt en vult het groene veld,<br>
+        de ochtend wordt met frisse lucht gesteld.<br>
+        Een vogel zingt, zo licht en vrij,<br>
+        en nieuwe kansen komen dichterbij.<br>
+        </p>
+
+        (ABAB)
+        <p>
+        De bomen dansen zachtjes in de wind,<br>
+        een blad dat dwarrelt zoekt zijn plek.<br>
+        De wereld verandert zoals een kind,<br>
+        dat leert en groeit bij elke trek.<br>
+        </p>
+
+        (AABBA)
+        <p>
+        Een wolk drijft zacht door hemelblauw,<br>
+        geen haast, geen doel, alleen vertrouwen.<br>
+        Hij reist maar voort door dag en nacht,<br>
+        de zon die schijnt, een stille pracht,<br>
+        en vindt zijn rust in ochtenddauw.<br>
+        </p>
+
+        Footer (één keuze maken, willekeurig):
+        Kies precies één van de volgende afsluitingen en neem die 1-op-1 over als:
+        <footer>... hier komt de groet ...</footer>
+
+        1) Hartelijke groeten van Sinterklaas 🎁
+        2) Vrolijke groetjes van de Sint!
+        3) Met warme wensen van Sint en Piet
+        4) Tot pakjesavond! — Sint en zijn Pieten
+        5) Een vrolijke groet van de Pieten
+        6) Dag hoor! — Sint knipoogt vriendelijk
+
+        Let op:
+        - Geen opsommingen in de footer
+        - Schrijf de gekozen footer als één vloeiende zin
+        - Alleen één <footer>-element, geen uitleg erbij
+
+        Schrijf nu het volledige gedicht,
+        met nieuwe rijmwoorden en nieuwe beelden,
+        en passend bij {name}, {onderwerp} en {info}.
+
     """
 
     try:
