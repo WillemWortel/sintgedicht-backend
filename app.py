@@ -16,31 +16,27 @@ def api_gedicht():
     onderwerp = request.args.get("onderwerp", "iets leuks")
     info = request.args.get("info", "")
 
-    prompt = f"""
-Schrijf een Sinterklaasgedicht voor {naam}.
+    prompt = f"Schrijf een Sinterklaasgedicht voor {naam} over {onderwerp}. Extra info: {info}"
 
-Onderwerp: {onderwerp}
-Extra informatie: {info}
+    try:
+        print("DEBUG: Groq call gaat verstuurd worden…")
 
-Eisen:
-- 12 tot 20 regels
-- Rijm om de 2 regels
-- Spreek {naam} aan met je/jij
-- Geen titel bovenaan
-"""
+        completion = client.chat.completions.create(
+            model="openai/gpt-oss-120b",
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=350,
+            temperature=0.9
+        )
 
-    completion = client.chat.completions.create(
-        model="openai/gpt-oss-20b",
-        messages=[
-            {"role": "system", "content": "Je bent een grappige Nederlandse Sinterklaasdichter."},
-            {"role": "user", "content": prompt},
-        ],
-        temperature=0.9,
-        max_tokens=350,
-    )
+        print("DEBUG: Response binnen")
+        print("DEBUG COMPLETION:", completion)
 
-    text = completion.choices[0].message.content or ""
-    return jsonify({"gedicht": text})
+        text = completion.choices[0].message.content
+        return jsonify({"gedicht": text})
+
+    except Exception as e:
+        print("GROQ ERROR:", e)
+        return jsonify({"error": str(e), "gedicht": ""})
 
 if __name__ == "__main__":
     app.run()
