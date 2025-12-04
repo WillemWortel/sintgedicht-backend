@@ -94,7 +94,7 @@ def api_gedicht():
         completion = client.chat.completions.create(
             model="openai/gpt-oss-120b",
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=700,
+            #max_tokens=700,
             temperature=0.9
         )
 
@@ -110,5 +110,6 @@ def api_gedicht():
 
 if __name__ == "__main__":
     app.run()
+
 
 
