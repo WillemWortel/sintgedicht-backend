@@ -14,7 +14,7 @@ def home():
 
 @app.route("/api/gedicht")
 def api_gedicht():
-    naam = request.args.get("name", "vriend")
+    naam = request.args.get("naam", "vriend")
     onderwerp = request.args.get("onderwerp", "iets leuks")
     info = request.args.get("info", "")
 
@@ -110,4 +110,5 @@ def api_gedicht():
 
 if __name__ == "__main__":
     app.run()
+
 
