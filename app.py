@@ -19,12 +19,18 @@ def api_gedicht():
     info = request.args.get("info", "")
 
     prompt = f"""
-        Schrijf een Sinterklaasgedicht in het Nederlands voor {naam} in HTML-opmaak.
+        Schrijf een Sinterklaasgedicht in het Nederlands voor {name} in HTML-opmaak.
 
         Vorm:
-        - Begin met:
-          <h2>Lieve {naam},</h2>
-        - Daarna volgt het gedicht in 4 tot 7 strofen.
+        Begin met een aanhef.
+        Kies precies één van de volgende aanhef en neem die 1-op-1 over als:
+          <h2>... hier komt de aanhef ...</h2>
+        1) Beste {name} 🎁,
+        2) Lieve {name},
+        3) Aan {name}, de beste schoonmoeder,
+        4) {name},
+        5) Aan die lieve {name},
+        - Daarna komen 1 tot 5 strofes. Kies het aantal willekeurig binnen dit bereik, 1 is echt net zo goed als 5.
         - Elke strofe heeft 4 of 5 regels.
         - Elke strofe staat in een eigen <p>…</p>-element.
         - Binnen elke strofe worden de regels gescheiden door <br>.
@@ -35,7 +41,7 @@ def api_gedicht():
         Inhoud:
         - Het gedicht gaat over: {onderwerp}.
         - Verwerk deze extra informatie subtiel: {info}.
-        - Spreek {naam} steeds aan met je en jij.
+        - Spreek {name} steeds aan met je en jij.
         - De toon is warm, Sinterklaas-achtig en licht humoristisch.
         - Geen sterretjes (*) of speciale markeringen rond rijmwoorden.
 
@@ -75,7 +81,7 @@ def api_gedicht():
         3) Met warme wensen van Sint en Piet
         4) Tot pakjesavond! — Sint en zijn Pieten
         5) Een vrolijke groet van de Pieten
-        6) Dag hoor! — Sint knipoogt vriendelijk
+        6) Dag hoor!
 
         Let op:
         - Geen opsommingen in de footer
@@ -84,8 +90,7 @@ def api_gedicht():
 
         Schrijf nu het volledige gedicht,
         met nieuwe rijmwoorden en nieuwe beelden,
-        en passend bij {naam}, {onderwerp} en {info}.
-
+        en passend bij {name}, {onderwerp} en {info}.
     """
 
     try:
@@ -110,6 +115,5 @@ def api_gedicht():
 
 if __name__ == "__main__":
     app.run()
-
 
 
