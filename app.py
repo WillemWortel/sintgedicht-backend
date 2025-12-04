@@ -25,11 +25,11 @@ def api_gedicht():
         Begin met een aanhef.
         Kies precies één van de volgende aanhef en neem die 1-op-1 over als:
           <h2>... hier komt de aanhef ...</h2>
-        1) Beste {name} 🎁,
-        2) Lieve {name},
-        3) Aan {name}, de beste schoonmoeder,
-        4) {name},
-        5) Aan die lieve {name},
+        1) Beste {naam} 🎁,
+        2) Lieve {naam},
+        3) Aan {naam}, de beste schoonmoeder,
+        4) {naam},
+        5) Aan die lieve {naam},
         - Daarna komen 1 tot 5 strofes. Kies het aantal willekeurig binnen dit bereik, 1 is echt net zo goed als 5.
         - Elke strofe heeft 4 of 5 regels.
         - Elke strofe staat in een eigen <p>…</p>-element.
@@ -41,7 +41,7 @@ def api_gedicht():
         Inhoud:
         - Het gedicht gaat over: {onderwerp}.
         - Verwerk deze extra informatie subtiel: {info}.
-        - Spreek {name} steeds aan met je en jij.
+        - Spreek {naam} steeds aan met je en jij.
         - De toon is warm, Sinterklaas-achtig en licht humoristisch.
         - Geen sterretjes (*) of speciale markeringen rond rijmwoorden.
 
@@ -90,7 +90,7 @@ def api_gedicht():
 
         Schrijf nu het volledige gedicht,
         met nieuwe rijmwoorden en nieuwe beelden,
-        en passend bij {name}, {onderwerp} en {info}.
+        en passend bij {naam}, {onderwerp} en {info}.
     """
 
     try:
@@ -115,5 +115,6 @@ def api_gedicht():
 
 if __name__ == "__main__":
     app.run()
+
 
 
