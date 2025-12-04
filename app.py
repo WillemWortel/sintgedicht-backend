@@ -1,67 +1,53 @@
 import os
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, request
 from groq import Groq
+from flask_cors import CORS
 
-# =====================
-# Config
-# =====================
-app = Flask(__name__, static_folder="static", static_url_path="")
+app = Flask(__name__)
+CORS(app)
 
-# Zorg dat je deze environment variable zet:
-#   GROQ_API_KEY= "niets"
 client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 
-PERSOON_NAAM = "Paula"  # <--- pas hier de naam aan
-
-POEM_PROMPT = """
-Schrijf een Sinterklaasgedicht in het Nederlands voor {name}.
-
-Eisen:
-- 12 tot 20 regels.
-- Rijm ongeveer elke 2 regels.
-- Luchtig, vriendelijk en een beetje grappig.
-- Spreek {name} aan met 'je' en 'jij'.
-- Geen grove taal, geen kwetsende opmerkingen.
-- Sinterklaas en zijn Pieten mogen genoemd worden, maar houd het actueel en speels.
-
-Begin direct met het gedicht, zonder titel of uitleg.
-""".strip()
-
-
-# =====================
-# Routes
-# =====================
+SYSTEM_PROMPT = "Je bent een creatieve Nederlandse Sinterklaasdichter."
 
 @app.route("/")
-def index():
-    # serve index.html uit de static-map
-    return send_from_directory(app.static_folder, "index.html")
-
+def home():
+    return "Sinterklaas API actief 🎁"
 
 @app.route("/api/gedicht")
 def api_gedicht():
-    """Maakt een nieuw Sinterklaasgedicht via Groq en geeft het terug als JSON."""
-    prompt = POEM_PROMPT.format(name=PERSOON_NAAM)
+    naam = request.args.get("naam", "vriend")
 
-    completion = client.chat.completions.create(
-        model="openai/gpt-oss-120b",  # kies hier je Groq-model
-        messages=[
-            {
-                "role": "system",
-                "content": "Je bent een creatieve Nederlandse Sinterklaasdichter.",
-            },
-            {
-                "role": "user",
-                "content": prompt,
-            },
-        ],
-        temperature=0.9,
-        max_tokens=512,
-    )
+    user_prompt = f"""
+Schrijf een Sinterklaasgedicht in het Nederlands voor {naam}.
 
-    text = completion.choices[0].message.content
-    return jsonify({"gedicht": text})
+Eisen:
+- 12 tot 20 regels.
+- Rijm elke 2 regels.
+- Gebruik humor en een vriendelijke toon.
+- Noem Sinterklaas en Pieten.
+- Begin direct met het gedicht, geen titel.
+- Spreek {naam} aan met 'je' en 'jij'.
+"""
 
+    try:
+        completion = client.chat.completions.create(
+            model="openai/gpt-oss-120b",
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": user_prompt},
+            ],
+            temperature=0.9,
+            max_tokens=300,
+        )
+
+        text = completion.choices[0].message.content or ""
+        return jsonify({"gedicht": text})
+
+    except Exception as e:
+        print("ERROR:", e)
+        return jsonify({"error": str(e), "gedicht": ""})
+    
 
 if __name__ == "__main__":
     app.run(debug=True)
