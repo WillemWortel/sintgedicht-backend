@@ -14,16 +14,16 @@ def home():
 
 @app.route("/api/gedicht")
 def api_gedicht():
-    naam = request.args.get("naam", "vriend")
+    naam = request.args.get("name", "vriend")
     onderwerp = request.args.get("onderwerp", "iets leuks")
     info = request.args.get("info", "")
 
     prompt = f"""
-        Schrijf een Sinterklaasgedicht in het Nederlands voor {name} in HTML-opmaak.
+        Schrijf een Sinterklaasgedicht in het Nederlands voor {naam} in HTML-opmaak.
 
         Vorm:
         - Begin met:
-          <h2>Lieve {name},</h2>
+          <h2>Lieve {naam},</h2>
         - Daarna volgt het gedicht in 4 tot 7 strofen.
         - Elke strofe heeft 4 of 5 regels.
         - Elke strofe staat in een eigen <p>…</p>-element.
@@ -35,7 +35,7 @@ def api_gedicht():
         Inhoud:
         - Het gedicht gaat over: {onderwerp}.
         - Verwerk deze extra informatie subtiel: {info}.
-        - Spreek {name} steeds aan met je en jij.
+        - Spreek {naam} steeds aan met je en jij.
         - De toon is warm, Sinterklaas-achtig en licht humoristisch.
         - Geen sterretjes (*) of speciale markeringen rond rijmwoorden.
 
@@ -84,7 +84,7 @@ def api_gedicht():
 
         Schrijf nu het volledige gedicht,
         met nieuwe rijmwoorden en nieuwe beelden,
-        en passend bij {name}, {onderwerp} en {info}.
+        en passend bij {naam}, {onderwerp} en {info}.
 
     """
 
@@ -110,3 +110,4 @@ def api_gedicht():
 
 if __name__ == "__main__":
     app.run()
+
