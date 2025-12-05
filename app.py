@@ -30,7 +30,7 @@ def api_gedicht():
     2) Lieve {naam},
     3) Aan {naam}, de beste schoonmoeder,
     4) {naam},
-    - Daarna komen precies 2 strofes.
+    - Daarna komen precies {aantal} strofes.
     - Elke strofe heeft 4 of 5 regels.
     - Elke strofe staat in een eigen p element.
     - Binnen elke strofe worden de regels gescheiden door br.
@@ -108,6 +108,7 @@ def api_gedicht():
 
 if __name__ == "__main__":
     app.run()
+
 
 
 
